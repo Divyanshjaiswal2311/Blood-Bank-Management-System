@@ -40,7 +40,7 @@ const Register = () => {
         <div className="row g-0">
           {/* Left section - Banner image */}
           <div className="col-md-8 form-banner ">
-            <img src="./assets/images/banner2.jpg" alt="registerImage" />
+            <img src="/assets/images/register_Image.png" alt="Blood donation" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
           </div>
           
           {/* Right section - Registration form */}

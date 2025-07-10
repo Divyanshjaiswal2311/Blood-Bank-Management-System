@@ -34,7 +34,7 @@ const Login = () => {
         <div className="row g-0">
           {/* Left section - Banner image */}
           <div className="col-md-8 form-banner">
-            <img src="./assets/images/banner1.jpg" alt="loginImage" />
+            <img src="/assets/images/login_image.png" alt="loginImage" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
           </div>
           
           {/* Right section - Login form */}
