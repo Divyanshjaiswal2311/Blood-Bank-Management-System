@@ -3,10 +3,13 @@ import Layout from "../../components/shared/Layout/Layout";
 import API from "../../services/API";
 import moment from "moment";
 import { BiUserPlus } from "react-icons/bi";
+import { DonationCertificate } from "../../components/shared/Certificate";
 
 const Donar = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showCert, setShowCert] = useState(false);
+  const [certData, setCertData] = useState(null);
   
   // Find donar records
   const getDonars = async () => {
@@ -26,6 +29,17 @@ const Donar = () => {
   useEffect(() => {
     getDonars();
   }, []);
+
+  // Helper to show certificate
+  const handleShowCertificate = (record) => {
+    setCertData({
+      donorName: record.name || record.organisationName,
+      units: 1, // Placeholder, update if you have actual units
+      date: record.createdAt ? new Date(record.createdAt).toLocaleDateString() : '',
+      qrValue: record._id || record.email || 'donation',
+    });
+    setShowCert(true);
+  };
 
   return (
     <Layout>
@@ -54,6 +68,7 @@ const Donar = () => {
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
                   <th scope="col">Date</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -72,6 +87,14 @@ const Donar = () => {
                     <td>{record.email}</td>
                     <td>{record.phone}</td>
                     <td>{moment(record.createdAt).format("DD/MM/YYYY hh:mm A")}</td>
+                    <td>
+                      <button
+                        className="btn btn-outline-danger btn-sm"
+                        onClick={() => handleShowCertificate(record)}
+                      >
+                        Download Certificate
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -87,6 +110,30 @@ const Donar = () => {
           </div>
         )}
       </div>
+      {showCert && certData && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+          onClick={() => setShowCert(false)}
+        >
+          <div onClick={e => e.stopPropagation()} style={{ background: "#fff", padding: 24, borderRadius: 12 }}>
+            <DonationCertificate {...certData} />
+            <button className="btn btn-secondary mt-3" onClick={() => setShowCert(false)}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </Layout>
   );
 };

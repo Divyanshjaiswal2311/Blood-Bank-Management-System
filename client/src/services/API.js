@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { checkServerConnection, getNetworkErrorMessage } from "../utils/serverCheck";
 
 // Debug the API URL being used
-const BASE_URL = 'http://localhost:5000/api/v1';
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
 console.log('Using API Base URL:', BASE_URL);
 
 // Test connection before setting up API
