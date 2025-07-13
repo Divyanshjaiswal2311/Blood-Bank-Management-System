@@ -12,11 +12,16 @@ import axios from 'axios';
  * @returns {Promise<boolean>} True if the server is accessible, false otherwise
  */
 export const checkServerConnection = async () => {
+  // Get the API URL from environment variables or use localhost as fallback
+  const baseUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+  const serverUrl = baseUrl.replace('/api/v1', '');
+  
   // Try multiple endpoints to see if any are responding
   const endpointsToTry = [
-    'http://localhost:5000/health',
-    'http://localhost:5000/api/v1/test',
-    'http://127.0.0.1:5000/health'
+    `${serverUrl}/health`,
+    `${baseUrl}/test`,
+    'http://localhost:5000/health', // Fallback for local development
+    'http://localhost:5000/api/v1/test'
   ];
   
   // Try each endpoint to see if any respond
@@ -47,7 +52,8 @@ export const checkServerConnection = async () => {
  */
 export const getNetworkErrorMessage = (error) => {
   if (error.code === "ERR_NETWORK") {
-    return "Cannot connect to server. Please ensure the server is running at http://localhost:5000. Try refreshing the page or restarting the server.";
+    const serverUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+    return `Cannot connect to server at ${serverUrl}. Please check your internet connection or try refreshing the page.`;
   } else if (error.response?.data?.message) {
     return error.response.data.message;
   } else if (error.message) {
