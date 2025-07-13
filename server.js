@@ -21,11 +21,27 @@ const connectDB = require("./config/db");  // Database connection function
 // Load environment variables from .env file
 dotenv.config();
 
-// Initialize MongoDB connection
-connectDB();
-
 // Check if we're in development mode
 const isDevelopment = process.env.NODE_ENV !== 'production';
+
+// Validate required environment variables
+const requiredEnvVars = ['MONGO_URL', 'JWT_SECRET'];
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  console.error(`Missing required environment variables: ${missingEnvVars.join(', ')}`);
+  console.error('Please check your environment configuration.');
+  if (isDevelopment) {
+    console.error('Make sure your .env file exists and contains all required variables.');
+  } else {
+    console.error('Please set these variables in your deployment platform (Render).');
+  }
+  process.exit(1);
+}
+
+// Initialize MongoDB connection
+console.log('Attempting to connect to MongoDB...');
+connectDB();
 
 // Create Express application instance
 const app = express();
@@ -145,10 +161,38 @@ app.use("*", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 // Start the server and listen on configured port
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(
-    `Node Server Running In ${process.env.DEV_MODE || 'development'} Mode On Port ${PORT}`
+    `Node Server Running In ${process.env.NODE_ENV || 'development'} Mode On Port ${PORT}`
       .bgBlue.white
   );
   console.log(`Server URL: http://localhost:${PORT}`);
+  console.log('Environment variables loaded successfully');
+  console.log('CORS configuration applied');
+  console.log('All routes configured');
+});
+
+// Handle server errors
+server.on('error', (error) => {
+  console.error('Server error:', error);
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use`);
+  }
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Promise Rejection:', err);
+  server.close(() => {
+    process.exit(1);
+  });
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  server.close(() => {
+    process.exit(1);
+  });
 });
