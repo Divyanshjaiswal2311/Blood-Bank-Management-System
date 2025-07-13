@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Layout from "../../components/shared/Layout/Layout";
 import moment from "moment";
 import API from "../../services/API";
@@ -6,7 +6,7 @@ import API from "../../services/API";
 const OrgList = () => {
   const [data, setData] = useState([]);
   //find donar records
-  const getDonars = async () => {
+  const getDonars = useCallback(async () => {
     try {
       const { data } = await API.get("/admin/org-list");
       console.log(data);
@@ -16,7 +16,7 @@ const OrgList = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     getDonars();

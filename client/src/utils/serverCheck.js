@@ -22,7 +22,7 @@ export const checkServerConnection = async () => {
   // Try each endpoint to see if any respond
   for (const endpoint of endpointsToTry) {
     try {
-      const response = await axios.get(endpoint, { 
+      await axios.get(endpoint, { 
         timeout: 3000,
         headers: { 'Content-Type': 'application/json' }
       });

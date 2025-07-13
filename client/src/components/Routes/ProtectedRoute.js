@@ -6,7 +6,7 @@
  * and redirects to the login page if not authenticated.
  */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";          // For dispatching Redux actions
 import API from "../../services/API";               // API service for backend calls
 import { getCurrentUser } from "../../redux/features/auth/authActions";  // Auth action
@@ -30,7 +30,7 @@ const ProtectedRoute = ({ children }) => {
    * Fetch current user data from the backend
    * Updates Redux state with user information or clears localStorage on failure
    */
-  const getUser = async () => {
+  const getUser = useCallback(async () => {
     try {
       // Get current user data from API
       const { data } = await API.get("/auth/current-user");
@@ -45,12 +45,12 @@ const ProtectedRoute = ({ children }) => {
       localStorage.clear();
       toast.error(error.message || "Authentication failed");
     }
-  };
+  }, [dispatch]);
 
   // Fetch user data when component mounts
   useEffect(() => {
     getUser();
-  }, [dispatch]); // Add dispatch as dependency
+  }, [dispatch, getUser]); // Add dispatch and getUser as dependencies
 
   // Check if user is authenticated by looking for token
   if (localStorage.getItem("token")) {

@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { checkServerConnection } from "../../../utils/serverCheck";
-import Spinner from "../Spinner";
 
 const Form = ({ formType, formTitle, submitBtn }) => {
   const [email, setEmail] = useState("");
