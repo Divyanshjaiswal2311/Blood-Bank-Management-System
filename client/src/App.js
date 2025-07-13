@@ -7,6 +7,7 @@
  */
 
 import { Routes, Route } from "react-router-dom";  // React Router components for navigation
+import LandingPage from "./pages/LandingPage";     // Public landing page
 import HomePage from "./pages/HomePage";           // Home/Dashboard page
 import Login from "./pages/auth/Login";            // User login page
 import Register from "./pages/auth/Register";      // User registration page
@@ -137,9 +138,15 @@ function App() {
           }
         />
         
-        {/* Home/Dashboard - Default authenticated route */}
+        {/* Public Landing Page - Default route for non-authenticated users */}
         <Route
           path="/"
+          element={<LandingPage />}
+        />
+        
+        {/* Dashboard - Authenticated route for logged-in users */}
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <HomePage />

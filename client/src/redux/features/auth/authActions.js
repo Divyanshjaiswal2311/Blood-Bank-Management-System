@@ -25,7 +25,7 @@ export const userLogin = createAsyncThunk(
       if (data.success) {
         toast.success(data.message);
         localStorage.setItem("token", data.token);
-        window.location.replace("/");
+        window.location.replace("/dashboard");
       } else {
         return rejectWithValue(data.message || "Login failed");
       }

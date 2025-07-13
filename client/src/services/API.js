@@ -78,8 +78,19 @@ API.interceptors.response.use(
     // Handle network errors
     console.error("API Response Error:", error?.response?.data || error.message || error);
     
+    // Don't show toast for 401 errors (authentication failures) as they're handled by components
+    if (error.response?.status === 401) {
+      console.log('Authentication error - handled by component');
+      return Promise.reject(error);
+    }
+    
+    // Don't show toast for network errors on initial page load
     if (error.code === "ERR_NETWORK") {
-      toast.error(getNetworkErrorMessage(error));
+      // Only show network error toast if it's not the initial page load
+      const isInitialLoad = !localStorage.getItem("token");
+      if (!isInitialLoad) {
+        toast.error(getNetworkErrorMessage(error));
+      }
     } else if (error.response?.data?.message) {
       toast.error(error.response.data.message);
     } else if (error.message) {
