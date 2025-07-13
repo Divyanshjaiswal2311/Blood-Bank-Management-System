@@ -36,7 +36,7 @@ export const handleLogin = async (credentials, dispatch = null) => {
     // Check server connectivity
     const isConnected = await checkServerConnection();
     if (!isConnected) {
-      const errorMsg = "Cannot connect to server. Please ensure the server is running at http://localhost:5000";
+      const errorMsg = "Cannot connect to server. Please check your internet connection or try refreshing the page.";
       toast.error(errorMsg);
       return { success: false, message: errorMsg };
     }
@@ -92,7 +92,7 @@ export const handleRegister = async (userData) => {
     // Check server connectivity
     const isConnected = await checkServerConnection();
     if (!isConnected) {
-      const errorMsg = "Cannot connect to server. Please ensure the server is running at http://localhost:5000";
+      const errorMsg = "Cannot connect to server. Please check your internet connection or try refreshing the page.";
       toast.error(errorMsg);
       return { success: false, message: errorMsg };
     }

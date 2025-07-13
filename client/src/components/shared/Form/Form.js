@@ -41,7 +41,7 @@ const Form = ({ formType, formTitle, submitBtn }) => {
     if (isConnected) {
       toast.success("Server connection restored");
     } else {
-      toast.error("Cannot connect to server. Please ensure the server is running at http://localhost:5000");
+              toast.error("Cannot connect to server. Please check your internet connection or try refreshing the page.");
     }
   };
 
@@ -54,7 +54,7 @@ const Form = ({ formType, formTitle, submitBtn }) => {
       setServerStatus(isConnected ? "connected" : "error");
       
       if (!isConnected) {
-        toast.error("Cannot connect to server. Please ensure the server is running at http://localhost:5000");
+        toast.error("Cannot connect to server. Please check your internet connection or try refreshing the page.");
         return;
       }
     }
@@ -143,7 +143,7 @@ const Form = ({ formType, formTitle, submitBtn }) => {
       {serverStatus === "error" && (
         <div className="alert alert-danger">
           <strong>Server Connection Error</strong>
-          <p>Cannot connect to the server. Please ensure the server is running at http://localhost:5000</p>
+          <p>Cannot connect to the server. Please check your internet connection or try refreshing the page.</p>
           <button 
             className="btn btn-sm btn-outline-danger" 
             onClick={handleCheckServer}

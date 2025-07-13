@@ -15,7 +15,7 @@ export const userLogin = createAsyncThunk(
       // Check server connection first
       const isConnected = await checkServerConnection();
       if (!isConnected) {
-        return rejectWithValue("Cannot connect to server. Please ensure the server is running at http://localhost:5000");
+        return rejectWithValue("Cannot connect to server. Please check your internet connection or try refreshing the page.");
       }
 
       console.log('Attempting login with:', { role, email });
@@ -74,7 +74,7 @@ export const userRegister = createAsyncThunk(
       // Check server connection first
       const isConnected = await checkServerConnection();
       if (!isConnected) {
-        return rejectWithValue("Cannot connect to server. Please ensure the server is running at http://localhost:5000");
+        return rejectWithValue("Cannot connect to server. Please check your internet connection or try refreshing the page.");
       }
 
       console.log('Attempting registration with:', { role, email });
