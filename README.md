@@ -63,7 +63,62 @@ A full-stack web application for managing blood donations, donors, hospitals, an
 _Add screenshots of the main pages here_
 
 ## Developer
-**Divyanshu Jiaswal**
+**Divyanshu Jaiswal**
 
 ---
 Feel free to contribute or raise issues!
+
+## Deployment Options
+
+### 1. **Backend Deployment** (Node.js/Express)
+Popular platforms:
+- **Render** (recommended for beginners)
+- **Railway**
+- **Heroku**
+- **DigitalOcean App Platform**
+- **AWS EC2**
+
+### 2. **Frontend Deployment** (React)
+Popular platforms:
+- **Vercel** (recommended for React)
+- **Netlify**
+- **GitHub Pages**
+- **Firebase Hosting**
+
+### 3. **Database**
+Your current setup uses **MongoDB Atlas** (cloud database), which is perfect for deployment.
+
+## Environment Variables for Deployment
+
+### Backend Production `.env` Variables:
+
+```env
+# Production Server Configuration
+PORT=5000
+DEV_MODE=production
+NODE_ENV=production
+
+# Database Configuration (keep your current MongoDB Atlas URL)
+MONGO_URL=mongodb+srv://divyanshujais2311:Divyanshu2311@cluster0.axtqnf1.mongodb.net/
+
+# JWT Configuration (use a stronger secret for production)
+JWT_SECRET=your-super-secure-production-jwt-secret-key-2024
+JWT_EXPIRE=7d
+
+# CORS Configuration (add your frontend domain)
+FRONTEND_URL=https://your-frontend-domain.com
+```
+
+### Frontend Production `.env` Variables:
+
+Create a `.env` file in the `client` folder:
+
+```env
+<code_block_to_apply_changes_from>
+```
+
+## Step-by-Step Deployment Guide
+
+### Step 1: Prepare Your Code
+
+1. **Update API.js** to use environment variables:
