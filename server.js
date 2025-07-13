@@ -84,12 +84,12 @@ app.get("/health", (req, res) => {
 });
 
 // Set server port from environment variables or use default
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 // Start the server and listen on configured port
 app.listen(PORT, () => {
   console.log(
-    `Node Server Running In ${process.env.DEV_MODE} Mode On Port ${process.env.PORT}`
+    `Node Server Running In ${process.env.DEV_MODE || 'development'} Mode On Port ${PORT}`
       .bgBlue.white
   );
   console.log(`Server URL: http://localhost:${PORT}`);
