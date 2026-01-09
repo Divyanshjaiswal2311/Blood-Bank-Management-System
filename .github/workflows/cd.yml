@@ -31,9 +31,9 @@ jobs:
       run: npm run build
     
     - name: Deploy to Netlify
-      uses: netlify/actions/cli@master
-      with:
-        args: deploy --prod --dir=client/build --message "Production deployment from GitHub Actions"
+      run: |
+        npm install -g netlify-cli
+        netlify deploy --prod --dir=client/build --site="${{ secrets.NETLIFY_SITE_ID }}" --auth="${{ secrets.NETLIFY_AUTH_TOKEN }}" --message "Production deployment from GitHub Actions"
       env:
         NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
         NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
